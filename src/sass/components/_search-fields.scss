@@ -53,11 +53,9 @@
 
 .search__svg,
 .select__svg {
-  width: 40px;
-  height: 40px;
   position: absolute;
-  top: 0;
-  right: 10px;
+  top: 14;
+  right: 32px;
 
   pointer-events: none;
 
@@ -66,6 +64,11 @@
   &.focus {
     fill: $accent-color;
   }
+}
+
+.select__svg {
+  top: 15;
+  right: 30px;
 }
 
 .overlay {
