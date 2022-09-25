@@ -53,9 +53,11 @@
 
 .search__svg,
 .select__svg {
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top: 50%;
-  transform: translate(-40px, -50%);
+  top: 0;
+  right: 10px;
 
   pointer-events: none;
 
