@@ -1,7 +1,7 @@
 import { EventsAPI } from './eventsAPI';
 import { paginationMarkap } from './pagination-handler';
 
-import { qwerty } from '../images/sprite.svg';
+import map from '../../src/images/sprite.svg';
 
 const gallery = document.querySelector('.js-events-gallery');
 const paginationList = document.querySelector('.pagination');
@@ -52,7 +52,7 @@ function galleryMarkup(arr = []) {
                     <p class="event-data">${localDate}</p>
                     <p class="event-place" data-id ="${id}">
                         <svg class="Map__icon" width="7" height="10">
-                            <use href="${qwerty}#Map"></use>
+                            <use  href="${map}#Map" ></use>
                         </svg>${
                           nameOfPlace ||
                           cityName ||
