@@ -17,7 +17,7 @@ export async function displayGallery(options) {
     gallery.innerHTML = galleryMarkup(eventsArray);
 
     paginationList.innerHTML = paginationMarkap(totalPages, pageNumber);
-    currentPage = res.page.number + 1;
+    const currentPage = res.page.number + 1;
     const paginationItem = document.querySelector(
       `.pagination li[data-page="${currentPage}"]`
     );
