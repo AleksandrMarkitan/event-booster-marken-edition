@@ -24,14 +24,23 @@
   }
 
   &--points {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
     line-height: calc(17.07 / 14);
-    color: $primary-text-color;
+    color: $accent-color;
     font-size: $mob-primary-font-size;
 
     @include bp(tab) {
       line-height: calc(21.94 / 18);
     }
   }
+}
+
+.pagination-item.points {
 }
 
 .pagination-item.current {

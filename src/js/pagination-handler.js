@@ -38,9 +38,9 @@ export function paginationMarkap(totalPages, pageNumber) {
       if (number <= quantityVisiblePagesStartEnd) {
         acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
       } else if (number === 6) {
-        acc += `<li class="pagination-item" data-page=${
+        acc += `<li class="pagination-item--points" data-page=${
           pageNumber + quantityVisiblePagesCenter
-        }>...</li>`;
+        }>+3&#11162</li>`;
       } else if (number === 7) {
         acc += `<li class="pagination-item" data-page=${arr.length}>${arr.length}</li>`;
       }
@@ -55,9 +55,9 @@ export function paginationMarkap(totalPages, pageNumber) {
       if (number === 1) {
         acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
       } else if ((number > 1) & (number < quantityVisiblePagesCenter)) {
-        acc += `<li class="pagination-item" data-page=${
+        acc += `<li class="pagination-item--points" data-page=${
           pageNumber - quantityVisiblePagesCenter
-        }>...</li>`;
+        }>&#11160-3</li>`;
       } else if (
         (number >= quantityVisiblePagesCenter) &
         (number < pageNumber - 1)
@@ -69,10 +69,10 @@ export function paginationMarkap(totalPages, pageNumber) {
         (number >= pageNumber + 1) &
         (number < pageNumber + quantityVisiblePagesCenter)
       ) {
-        acc += `<li class="pagination-item" data-page=${
+        acc += `<li class="pagination-item--points" data-page=${
           pageNumber + quantityVisiblePagesCenter
         }
-        }>...</li>`;
+        }>+3&#11162</li>`;
       } else if (
         (number >= pageNumber + quantityVisiblePagesCenter) &
         (number < arr.length)
@@ -89,9 +89,9 @@ export function paginationMarkap(totalPages, pageNumber) {
       if (number === 1) {
         acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
       } else if (number === 2) {
-        acc += `<li class="pagination-item" data-page=${
+        acc += `<li class="pagination-item--points" data-page=${
           pageNumber - quantityVisiblePagesCenter
-        }>...</li>`;
+        }>&#11160-3</li>`;
       } else if (number > pageArr.length - quantityVisiblePagesStartEnd) {
         acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
       }
