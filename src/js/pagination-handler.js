@@ -1,4 +1,3 @@
-import { EventsAPI } from './eventsAPI';
 import { countryCode } from './search-form-handler';
 import { keyword } from './search-form-handler';
 import { displayGallery } from './displayGallery';
@@ -15,94 +14,89 @@ function onpaginationIteamHdlr(e) {
 export function paginationMarkap(totalPages, pageNumber) {
   let pageArrResp = [];
   let pageArr = [];
+  const maxPageQuantity = 30;
+  const quantityVisiblePagesStartEnd = 5;
+  const quantityVisiblePagesCenter = 3;
+
   for (let index = 1; index <= totalPages; index += 1) {
     pageArrResp.push(index);
   }
 
-  if (pageArrResp.length > 30) {
-    pageArr = pageArrResp.slice(0, 30);
+  if (pageArrResp.length > maxPageQuantity) {
+    pageArr = pageArrResp.slice(0, maxPageQuantity);
   } else pageArr = pageArrResp;
 
   if (pageArr.length <= 7) {
-    const markap1 = pageArr.reduce(
-      (acc, number, index, arr) =>
+    const markap = pageArr.reduce(
+      (acc, number) =>
         (acc += `<li class="pagination-item" data-page=${number}>${number}</li>`),
       ``
     );
-    return markap1;
-  }
-
-  if ((pageArr.length > 7) & (pageNumber < 5)) {
-    const markap1 = pageArr.reduce((acc, number, index, arr) => {
-      if (index < 5 || arr.length <= 7) {
+    return markap;
+  } else if (pageNumber < quantityVisiblePagesStartEnd) {
+    const markap = pageArr.reduce((acc, number, index, arr) => {
+      if (number <= quantityVisiblePagesStartEnd) {
+        acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
+      } else if (number === 6) {
+        acc += `<li class="pagination-item" data-page=${
+          pageNumber + quantityVisiblePagesCenter
+        }>...</li>`;
+      } else if (number === 7) {
+        acc += `<li class="pagination-item" data-page=${arr.length}>${arr.length}</li>`;
+      }
+      return acc;
+    }, ``);
+    return markap;
+  } else if (
+    (pageNumber >= quantityVisiblePagesStartEnd) &
+    (pageNumber <= pageArr.length - 4)
+  ) {
+    const markap = pageArr.reduce((acc, number, index, arr) => {
+      if (number === 1) {
+        acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
+      } else if ((number > 1) & (number < quantityVisiblePagesCenter)) {
+        acc += `<li class="pagination-item" data-page=${
+          pageNumber - quantityVisiblePagesCenter
+        }>...</li>`;
+      } else if (
+        (number >= quantityVisiblePagesCenter) &
+        (number < pageNumber - 1)
+      ) {
+        acc += ``;
+      } else if ((number >= pageNumber - 1) & (number <= pageNumber + 1)) {
+        acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
+      } else if (
+        (number >= pageNumber + 1) &
+        (number < pageNumber + quantityVisiblePagesCenter)
+      ) {
+        acc += `<li class="pagination-item" data-page=${
+          pageNumber + quantityVisiblePagesCenter
+        }
+        }>...</li>`;
+      } else if (
+        (number >= pageNumber + quantityVisiblePagesCenter) &
+        (number < arr.length)
+      ) {
+        acc += ``;
+      } else if (number === arr.length) {
         acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
       }
       return acc;
     }, ``);
-    const markap2 = pageArr.reduce((acc, number, index, arr) => {
-      if ((arr.length > 6) & (index >= 5) & (index <= arr.length - 1)) {
-        return `<li class="pagination-item" data-page=${number}>...</li>`;
-      }
-    });
-    const markap3 = pageArr.reduce((acc, number, index, arr) => {
-      if ((arr.length > 5) & (index === arr.length - 1)) {
-        return `<li class="pagination-item" data-page=${number}>${number}</li>`;
-      }
-    });
-    return markap1 + markap2 + markap3;
-  }
-
-  if ((pageArr.length > 7) & (pageNumber >= 5)) {
-    const markap1 = pageArr.reduce((acc, number, index, arr) => {
-      if (index === 1) {
-        acc += `<li class="pagination-item" data-page=${index}>${index}</li>`;
-      }
-      return acc;
-    }, ``);
-    const markap2 = pageArr.reduce((acc, number, index, arr) => {
-      if ((index > 1) & (index < pageNumber - 1)) {
-        return `<li class="pagination-item" data-page=${index}>...</li>`;
-      }
-      return acc;
-    }, ``);
-    const markap3 = pageArr.reduce((acc, number, index, arr) => {
-      if (
-        (index >= pageNumber - 1) &
-        (index <= pageNumber + 1) &
-        (pageNumber < arr.length - 5)
-      ) {
-        acc += `<li class="pagination-item" data-page=${index}>${index}</li>`;
-      }
-      return acc;
-    }, ``);
-    const markap4 = pageArr.reduce((acc, number, index, arr) => {
-      if (
-        (index >= pageNumber + 1) &
-        (index <= arr.length - 5) &
-        (pageNumber < arr.length - 4)
-      ) {
-        return `<li class="pagination-item" data-page=${index}>...</li>`;
-      }
-      return acc;
-    }, ``);
-
-    const markap5 = pageArr.reduce((acc, number, index, arr) => {
-      if (
-        (index >= arr.length - 5) &
-        (index <= arr.length - 2) &
-        (pageNumber > arr.length - 6)
-      ) {
+    return markap;
+  } else if (pageNumber > pageArr.length - quantityVisiblePagesStartEnd) {
+    const markap = pageArr.reduce((acc, number, index, arr) => {
+      if (number === 1) {
+        acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
+      } else if (number === 2) {
+        acc += `<li class="pagination-item" data-page=${
+          pageNumber - quantityVisiblePagesCenter
+        }>...</li>`;
+      } else if (number > pageArr.length - quantityVisiblePagesStartEnd) {
         acc += `<li class="pagination-item" data-page=${number}>${number}</li>`;
       }
       return acc;
     }, ``);
-    const markap6 = pageArr.reduce((acc, number, index, arr) => {
-      if (index === arr.length - 1) {
-        return `<li class="pagination-item" data-page=${number}>${number}</li>`;
-      }
-      return acc;
-    }, ``);
-
-    return markap1 + markap2 + markap3 + markap4 + markap5 + markap6;
+    return markap;
   }
 }

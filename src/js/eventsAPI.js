@@ -1,82 +1,36 @@
 import axios from 'axios';
 
-export class EventsAPI {
-  static apikey = 'GfgVh4R7D4nbAHFUVOA6O71Si5aOA40O';
-  static params = {
-    countryCode: 'us',
-  };
-  static page = '0';
-  static countryCode = 'us';
-  static keyword = '';
-  static totalPages = 0;
-  static currentPage = 0;
-  /**
-   *
-   * @param {options} options - Object of options of query look into API_DOC
-   *
-   * @returns - Array of events
-   */
-  static async getEvents(options = {}) {
-    const { countryCode = '', keyword = '', page } = options;
-    if (keyword.trim() || countryCode.trim() || page) {
-      try {
-        const res = await axios.get(
-          'https://app.ticketmaster.com/discovery/v2/events.json',
-          {
-            params: {
-              page,
-              countryCode,
-              keyword,
-              apikey: EventsAPI.apikey,
-            },
-          }
-        );
+const BASE_URL = 'https://app.ticketmaster.com/discovery/v2/events';
+const apikey = 'GfgVh4R7D4nbAHFUVOA6O71Si5aOA40O';
+const size = 20;
 
-        return res.data;
-      } catch (e) {}
-    } else
-      try {
-        const res = await axios.get(
-          'https://app.ticketmaster.com/discovery/v2/events.json',
-          {
-            params: {
-              page: EventsAPI.page,
-              countryCode: EventsAPI.countryCode,
-              keyword: EventsAPI.keyword,
-              apikey: EventsAPI.apikey,
-            },
-          }
-        );
+export async function getEvents({ keyword, countryCode = 'pl', page } = {}) {
+  try {
+    const resp = await axios.get(`${BASE_URL}.json`, {
+      params: {
+        apikey,
+        size,
+        keyword,
+        countryCode,
+        page,
+      },
+    });
+    return resp.data;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 
-        return res.data;
-      } catch (e) {}
-  }
-  static async getEvent(id) {
-    try {
-      const res = await axios.get(
-        `https://app.ticketmaster.com/discovery/v2/events/${id}.json`,
-        {
-          params: {
-            apikey: EventsAPI.apikey,
-          },
-        }
-      );
+export async function getEvent(id) {
+  try {
+    const event = await axios.get(`${BASE_URL}/${id}.json`, {
+      params: {
+        apikey,
+      },
+    });
 
-      return res;
-    } catch (e) {}
-  }
-  /**
-   *
-   * @returns - Current page of Query. Start from ZERO
-   */
-  static getCurrentPage() {
-    return EventsAPI.currentPage;
-  }
-  /**
-   *
-   * @returns - Total pages of events
-   */
-  static getTotalPages() {
-    return EventsAPI.getEvents();
+    return event;
+  } catch (e) {
+    // console.error(error.message);
   }
 }

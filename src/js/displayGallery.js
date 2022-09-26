@@ -1,4 +1,4 @@
-import { EventsAPI } from './eventsAPI';
+import { getEvents } from './eventsAPI';
 import { paginationMarkap } from './pagination-handler';
 
 import map from '../../src/images/sprite.svg';
@@ -7,14 +7,25 @@ const gallery = document.querySelector('.js-events-gallery');
 const paginationList = document.querySelector('.pagination');
 
 export async function displayGallery(options) {
-  const res = await EventsAPI.getEvents(options);
+  const res = await getEvents(options);
+
   const pageNumber = res.page.number + 1;
   const totalPages = res.page.totalPages;
 
   if (res.page.totalElements) {
-    gallery.innerHTML = galleryMarkup(res._embedded.events);
+    const eventsArray = res._embedded.events;
+    gallery.innerHTML = galleryMarkup(eventsArray);
+
     paginationList.innerHTML = paginationMarkap(totalPages, pageNumber);
-  } else gallery.innerHTML = galleryMarkupZeroReq();
+    currentPage = res.page.number + 1;
+    const paginationItem = document.querySelector(
+      `.pagination li[data-page="${currentPage}"]`
+    );
+    paginationItem.classList.add('current');
+  } else {
+    gallery.innerHTML = galleryMarkupZeroReq();
+    paginationList.innerHTML = '';
+  }
 }
 
 function galleryMarkup(arr = []) {
@@ -29,7 +40,6 @@ function galleryMarkup(arr = []) {
       _embedded: { venues },
     } = event;
     const {
-      address: { line1: address },
       city: { name: cityName },
       name: nameOfPlace,
     } = venues[0];
@@ -39,30 +49,24 @@ function galleryMarkup(arr = []) {
           return elem;
         }
       }) || images[0];
-    return (acc += `<li class="gallery__item" >
-         <div class="gallery__div" data-id ="${id}">
-            <a class="gallery__link animation js-gallery-card" data-id ="${id}" href="">
+    return (acc += `<li class="gallery__item" data-id ="${id}">
+              <a href="" class="gallery__link" data-id ="${id}">
                 <img class="gallery__img" src="${
                   eventImg.url
                 }" width="267px" height="337px"
                     alt="thing">
                 <div class="gallery__pinkBorder"></div>
-                <div class="event-info" data-id ="${id}">
-                    <h3 class="event-heading">${name}</h3>
-                    <p class="event-data">${localDate}</p>
-                    <p class="event-place" data-id ="${id}">
-                        <svg class="Map__icon" width="7" height="10">
+                <h3 class="event-heading">${name}</h3>
+                <p class="event-data">${localDate}</p>
+                <p class="event-place">
+                        <svg class="map__icon" width="7" height="10">
                             <use  href="${map}#Map" ></use>
                         </svg>${
-                          nameOfPlace ||
-                          cityName ||
-                          address ||
-                          'No info about place'
+                          nameOfPlace || cityName || 'No info about place'
                         }</p>
-                </div>
-            </a>
-        </div></li>`);
-  }, '');
+              </a>
+            </li>`);
+  }, ``);
 }
 
 function galleryMarkupZeroReq() {

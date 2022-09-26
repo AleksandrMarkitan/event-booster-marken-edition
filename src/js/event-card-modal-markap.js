@@ -1,10 +1,10 @@
-import { EventsAPI } from './eventsAPI';
+import { getEvent } from './eventsAPI';
 import svg from '../images/sprite.svg';
 
 const galleryCard = document.querySelector('.modal__wrap');
 
 export async function renderGalleryCard(id) {
-  const response = await EventsAPI.getEvent(id);
+  const response = await getEvent(id);
   galleryCard.innerHTML = createMarkupEventCard(response.data);
 }
 

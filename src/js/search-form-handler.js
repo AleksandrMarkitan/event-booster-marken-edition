@@ -56,7 +56,7 @@ function onCountrylistHdlr(e) {
   countryCode = e.target.dataset.id;
 
   if (countryCode === 'RU') {
-    refs.galleryList.innerHTML = `<li class="gallery__item" >
+    refs.galleryList.innerHTML = `<li class="gallery__item kobzon" >
 	  <div class="gallery__div"">
 		  <a class="gallery__link animation js-gallery-card" href="">
 				<img class="gallery__img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHsnt4vP2jNbIX4gRk6QxjRnRal972jC6HMw&usqp=CAU" width="267px" height="337px"
