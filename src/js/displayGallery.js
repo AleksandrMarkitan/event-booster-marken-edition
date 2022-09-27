@@ -4,7 +4,7 @@ import { paginationMarkap } from './pagination-handler';
 import map from '../../src/images/sprite.svg';
 
 const gallery = document.querySelector('.js-events-gallery');
-const paginationList = document.querySelector('.pagination');
+export const paginationList = document.querySelector('.pagination');
 
 export async function displayGallery(options) {
   const res = await getEvents(options);

@@ -3,6 +3,7 @@ import { countries } from './countries';
 import { markapCountryList } from './select-country-markup';
 import { displayGallery } from './displayGallery';
 import { findeCountry } from './select-country-markup';
+import { paginationList } from './displayGallery';
 import svg from '../images/sprite.svg';
 
 const refs = {
@@ -56,6 +57,7 @@ function onCountrylistHdlr(e) {
   countryCode = e.target.dataset.id;
 
   if (countryCode === 'RU') {
+    paginationList.innerHTML = '';
     refs.galleryList.innerHTML = `<li class="gallery__item kobzon" >
 	  <div class="gallery__div"">
 		  <a class="gallery__link animation js-gallery-card" href="">
