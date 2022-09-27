@@ -15,18 +15,18 @@ export function paginationMarkap(totalPages, pageNumber) {
   let pageArrResp = [];
   let pageArr = [];
   const maxPageQuantity = 30;
+  const paginationLength = 7;
   const quantityVisiblePagesStartEnd = 5;
   const quantityVisiblePagesCenter = 3;
 
   for (let index = 1; index <= totalPages; index += 1) {
     pageArrResp.push(index);
   }
-
   if (pageArrResp.length > maxPageQuantity) {
     pageArr = pageArrResp.slice(0, maxPageQuantity);
   } else pageArr = pageArrResp;
 
-  if (pageArr.length <= 7) {
+  if (pageArr.length <= paginationLength) {
     const markap = pageArr.reduce(
       (acc, number) =>
         (acc += `<li class="pagination-item" data-page=${number}>${number}</li>`),
@@ -41,7 +41,7 @@ export function paginationMarkap(totalPages, pageNumber) {
         acc += `<li class="pagination-item--points" data-page=${
           pageNumber + quantityVisiblePagesCenter
         }>+3&#11162</li>`;
-      } else if (number === 7) {
+      } else if (number === paginationLength) {
         acc += `<li class="pagination-item" data-page=${arr.length}>${arr.length}</li>`;
       }
       return acc;
